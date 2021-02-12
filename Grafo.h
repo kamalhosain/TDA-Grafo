@@ -2,12 +2,16 @@
 #define GRAFO_H_
 
 #include "./NodoGrafo.h"
+#include "./lista.h"
 #include <iostream>
 
-template<class K>
+const int CANTIDAD_FILAS = 8;
+const int CANTIDAD_COLUMNAS = 8;
+
+template<class T>
 class Grafo {
 private:
-	NodoGrafo<K> matrizDeAyacencia [][];
+	NodoGrafo<T>* matrizDeAyacencia [][];
 
 public:
     //Crea un grafo vacio
@@ -45,8 +49,39 @@ public:
     //PRE: Grafo != null
     //POS: nodo es un valor válido
     existeNodo();
+    
+    // Recorrido en anchura
+    void BFS();
 
     
 };
+
+
+
+
+template<class T>
+void Grafo<T>::BFS() {
+
+    for (int i = 0; i < CANTIDAD_FILAS; i++) {
+        for (int j = 0; j < CANTIDAD_COLUMNAS; j++) {
+            this->matrizDeAyacencia[i][j]->setVisitado(0);
+        }
+    }
+
+    int indice = 1;
+    Lista<NodoGrafo*> *lista = new Lista<NodoGrafo*>();
+
+    int m = 0;
+    int n = 0;
+
+    NodoGrafo<K>* vertice = this->matrizDeAyacencia[m][n];
+    while(vertice->noFueVisitado()) {
+        vertice->setVisitado(indice);
+        indice++;
+
+    }
+        
+}
+
 
 #endif /* GRAFO_H_ */
