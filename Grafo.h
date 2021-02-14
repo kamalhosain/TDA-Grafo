@@ -1,19 +1,20 @@
 #ifndef GRAFO_H_
 #define GRAFO_H_
 
-#include "./NodoGrafo.h"
+#include "./Arista.h"
+#include "./Vertice.h"
 #include "./lista.h"
 #include <iostream>
 
-const int CANTIDAD_FILAS = 8;
-const int CANTIDAD_COLUMNAS = 8;
+const int CANTIDAD_VERTICES = 8;
 
 template<class T>
 class Grafo {
 private:
-	NodoGrafo<T>* matrizDeAyacencia [][];
-
-public:
+	Arista<T>* matrizDeAyacencia [][]; //relacion entre vertices
+    Vertice<T>* matrizDeVertices [][];  //referencia a cada vertice
+    
+public: 
     //Crea un grafo vacio
     Grafo();
 
@@ -53,35 +54,40 @@ public:
     // Recorrido en anchura
     void BFS();
 
+    Vertice<K>** floydWarshall();
     
 };
 
 
+template<class T>
+Grafo<T>::Grafo(){
+    Vertice<T>** matrizDeVertices;
+    matrizDeVertices = new T*[CANTIDAD_VERTICES];
+    
+    for(int i = 0; i < CANTIDAD_VERTICES; i++)
+        matrizDeVertices[i] = new T[CANTIDAD_VERTICES];
 
+    Arista<T>** matrizDeAyacencia;
+    matrizDeAyacencia = new T*[CANTIDAD_VERTICES];
+    
+    for(int i = 0; i < CANTIDAD_VERTICES; i++)
+        matrizDeAyacencia[i] = new T[CANTIDAD_VERTICES];
+    
+}
 
 template<class T>
-void Grafo<T>::BFS() {
+Grafo<T>::~Grafo(){
+    for(int i = 0; i < CANTIDAD_VERTICES; i++)
+        delete[]matrizDeVertices[i];
+    
+    delete[]matrizDeVertices;
 
-    for (int i = 0; i < CANTIDAD_FILAS; i++) {
-        for (int j = 0; j < CANTIDAD_COLUMNAS; j++) {
-            this->matrizDeAyacencia[i][j]->setVisitado(0);
-        }
-    }
-
-    int indice = 1;
-    Lista<NodoGrafo*> *lista = new Lista<NodoGrafo*>();
-
-    int m = 0;
-    int n = 0;
-
-    NodoGrafo<K>* vertice = this->matrizDeAyacencia[m][n];
-    while(vertice->noFueVisitado()) {
-        vertice->setVisitado(indice);
-        indice++;
-
-    }
-        
+    for(int i = 0; i < CANTIDAD_VERTICES; i++)
+        delete[]matrizDeAyacencia[i];
+    
+    delete[]matrizDeAdyacencia;
 }
+
 
 
 #endif /* GRAFO_H_ */
