@@ -12,7 +12,8 @@ template<class T>
 class Grafo {
 private:
 	Arista<T>* matrizDeAyacencia [][]; //relacion entre vertices
-    Vertice<T>* matrizDeVertices [][];  //referencia a cada vertice
+    Vertice<T>* matrizDeVertices [][]; //referencia a cada vertice
+    Vertice<T>* matrizDeRecorridoMinimo [][];
     
 public: 
     //Crea un grafo vacio
@@ -54,7 +55,7 @@ public:
     // Recorrido en anchura
     void BFS();
 
-    Vertice<K>** floydWarshall();
+    Vertice<T>** floydWarshall(Vertice<T>* vertice);
     
 };
 
@@ -85,9 +86,19 @@ Grafo<T>::~Grafo(){
     for(int i = 0; i < CANTIDAD_VERTICES; i++)
         delete[]matrizDeAyacencia[i];
     
-    delete[]matrizDeAdyacencia;
+    delete[] matrizDeAyacencia;
 }
 
+template<class T>
+Vertice<T>** Grafo<T>:: floydWarshall(Vertice<T>* vertice) {
 
+
+    Vertice<T>* distancia = this->matrizDeRecorridoMinimo;
+    for(int i = 0; i < CANTIDAD_VERTICES, i++){
+        distancia[i][i] == 999999;
+    }
+    
+    
+}
 
 #endif /* GRAFO_H_ */
