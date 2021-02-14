@@ -55,7 +55,7 @@ public:
     // Recorrido en anchura
     void BFS();
 
-    Vertice<T>** floydWarshall(Vertice<T>* vertice);
+    Vertice<T>** floydWarshall(int desde[], int hasta[]);
     
 };
 
@@ -79,26 +79,39 @@ Grafo<T>::Grafo(){
 template<class T>
 Grafo<T>::~Grafo(){
     for(int i = 0; i < CANTIDAD_VERTICES; i++)
-        delete[]matrizDeVertices[i];
+        delete[] matrizDeVertices[i];
     
-    delete[]matrizDeVertices;
+    delete[] matrizDeVertices;
 
     for(int i = 0; i < CANTIDAD_VERTICES; i++)
-        delete[]matrizDeAyacencia[i];
+        delete[] matrizDeAyacencia[i];
     
     delete[] matrizDeAyacencia;
 }
 
 template<class T>
-Vertice<T>** Grafo<T>:: floydWarshall(Vertice<T>* vertice) {
+Vertice<T>** Grafo<T>:: floydWarshall(int posDesde[], int posHasta[]) {
 
 
-    Vertice<T>* distancia = this->matrizDeRecorridoMinimo;
+    Vertice<T>* pesos = this->matrizDeRecorridoMinimo;
     for(int i = 0; i < CANTIDAD_VERTICES, i++){
+        //Inicializa diagonal principal en infinito
         distancia[i][i] == 999999;
     }
     
-    
+    for(int k = 0; k < CANTIDAD_VERTICES, k++){
+        for(int i = 0; i < CANTIDAD_VERTICES, i++){
+            for(int j = 0; j < CANTIDAD_VERTICES, j++){
+                int peso = pesos[i][k] + pesos[k][j];
+                //Compara si se encuentra un peso menor al de la matriz
+                if (peso < pesos[i][j])
+                    pesos[i][j] = peso;
+            }
+        }
+    }
+
+    return pesos;
+
 }
 
 #endif /* GRAFO_H_ */
